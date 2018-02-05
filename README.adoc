@@ -1,0 +1,6 @@
+= Kotlin JPA Workbench
+
+A project to play around with Kotlin and JPA in the context of
+Spring Boot.
+
+_Note:_ The code in this repository might not be working.

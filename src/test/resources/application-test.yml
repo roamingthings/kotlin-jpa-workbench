@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    show-sql: true
+logging:
+  level:
+    org.springframework.web: DEBUG
+    guru.springframework.controllers: DEBUG
+    org.hibernate: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
