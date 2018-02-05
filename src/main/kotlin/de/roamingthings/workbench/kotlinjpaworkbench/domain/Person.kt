@@ -10,8 +10,8 @@ data class Person(
         val id: Long? = null,
         @NotBlank val name: String,
 
-        @OneToMany(mappedBy = "person", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER)
-        var addresses: List<Address> = emptyList()
+        @OneToMany(mappedBy = "person", cascade = [(CascadeType.ALL)])
+        var addresses: MutableList<Address> = ArrayList()
 )
 
 @Entity
@@ -22,6 +22,6 @@ data class Address(
         @NotBlank val address: String,
 
         @NotNull
-        @ManyToOne(optional = false, fetch = FetchType.EAGER)
-        var person: Person? = null
+        @ManyToOne(optional = false)
+        var person: Person
 )

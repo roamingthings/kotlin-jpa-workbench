@@ -19,9 +19,6 @@ class PersonRepositoryIT {
     @Autowired
     lateinit var personRepository: PersonRepository
 
-    @Autowired
-    lateinit var addressRepository: AddressRepository
-
     @Test
     fun `should persist person`() {
         // given
@@ -41,10 +38,11 @@ class PersonRepositoryIT {
     fun `should persist person with address`() {
         // given
         val aPerson = Person(name = "Toni Tester")
-        personRepository.saveAndFlush(aPerson)
-
         val anAddress = Address(address = "Mustergasse 1", person = aPerson)
-        addressRepository.saveAndFlush(anAddress)
+        aPerson.addresses.add(anAddress)
+
+        // when
+        personRepository.saveAndFlush(aPerson)
 
         // then
         val actualPerson = personRepository.findByName("Toni Tester")
