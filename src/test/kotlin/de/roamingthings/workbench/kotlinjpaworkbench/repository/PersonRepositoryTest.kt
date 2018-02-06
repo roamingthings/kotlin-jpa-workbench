@@ -50,5 +50,7 @@ class PersonRepositoryIT {
         assertThat(actualPerson.id).isNotNull()
         assertThat(actualPerson.name).isEqualTo("Toni Tester")
         assertThat(actualPerson.addresses).hasSize(1)
+        assertThat(actualPerson.addresses).extracting("person")
+                .contains(actualPerson)
     }
 }
