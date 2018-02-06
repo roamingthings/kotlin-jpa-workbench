@@ -45,6 +45,9 @@ class PersonRepositoryIT {
         personRepository.saveAndFlush(aPerson)
 
         // then
+        val findById = personRepository.findById(aPerson.id!!)
+        assertThat(findById.isPresent).isTrue()
+
         val actualPerson = personRepository.findByName("Toni Tester")
         assertThat(actualPerson).isNotNull()
         assertThat(actualPerson.id).isNotNull()
