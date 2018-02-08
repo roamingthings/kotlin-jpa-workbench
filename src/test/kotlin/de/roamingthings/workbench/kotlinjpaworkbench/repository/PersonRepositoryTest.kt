@@ -3,6 +3,7 @@ package de.roamingthings.workbench.kotlinjpaworkbench.repository
 import de.roamingthings.workbench.kotlinjpaworkbench.domain.Address
 import de.roamingthings.workbench.kotlinjpaworkbench.domain.Person
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.SoftAssertions
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -55,5 +56,33 @@ class PersonRepositoryIT {
         assertThat(actualPerson.addresses).hasSize(1)
         assertThat(actualPerson.addresses).extracting("person")
                 .contains(actualPerson)
+    }
+
+    @Test
+    fun `should copy person with relation`() {
+        // given
+        val aPerson = aPersistedPersonWithAddress()
+        val anAddress = aPerson.addresses.elementAt(0)
+
+        // when
+        val copiedPerson = aPerson.copy()
+        copiedPerson.addresses = HashSet(aPerson.addresses)
+
+        // then
+        val softly = SoftAssertions()
+        softly.assertThat(copiedPerson.name).isEqualTo(aPerson.name)
+        softly.assertThat(copiedPerson.addresses).hasSize(aPerson.addresses.size)
+
+        val copiedAddress = aPerson.addresses.elementAt(0)
+        assertThat(copiedAddress.address).isEqualTo(anAddress.address)
+        softly.assertAll()
+    }
+
+    private fun aPersistedPersonWithAddress(): Person {
+        val aPerson = Person(name = "Toni Tester")
+        val anAddress = Address(address = "Mustergasse 1", person = aPerson)
+        aPerson.addresses.add(anAddress)
+
+        return personRepository.saveAndFlush(aPerson)
     }
 }

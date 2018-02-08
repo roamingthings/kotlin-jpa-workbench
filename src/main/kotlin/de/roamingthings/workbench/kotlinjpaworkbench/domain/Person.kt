@@ -9,7 +9,9 @@ import javax.validation.constraints.NotNull
 data class Person(
         @Id @GeneratedValue
         val id: Long? = null,
-        @NotBlank val name: String
+
+        @NotBlank
+        val name: String
 ) {
     @OneToMany(mappedBy = "person", cascade = [(CascadeType.ALL)])
     var addresses: MutableSet<Address> = HashSet()
