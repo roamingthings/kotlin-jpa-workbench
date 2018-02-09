@@ -14,7 +14,12 @@ data class Person(
         val name: String
 ) {
     @OneToMany(mappedBy = "person", cascade = [(CascadeType.ALL)])
-    var addresses: MutableSet<Address> = HashSet()
+    var addresses: Set<Address> = HashSet()
+
+    fun addAddress(address: Address) {
+        address.person = this
+        addresses += address
+    }
 }
 
 @Entity
@@ -25,10 +30,6 @@ data class Address(
 
         @NotBlank val address: String
 ) {
-    constructor(address: String, person: Person): this(address = address) {
-        this.person = person
-    }
-
     @NotNull
     @ManyToOne(optional = false)
     lateinit var person: Person

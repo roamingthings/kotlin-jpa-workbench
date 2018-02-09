@@ -38,9 +38,9 @@ class PersonRepositoryIT {
     @Test
     fun `should persist person with address`() {
         // given
+        val anAddress = Address(address = "Mustergasse 1")
         val aPerson = Person(name = "Toni Tester")
-        val anAddress = Address(address = "Mustergasse 1", person = aPerson)
-        aPerson.addresses.add(anAddress)
+        aPerson.addAddress(anAddress)
 
         // when
         personRepository.saveAndFlush(aPerson)
@@ -79,9 +79,10 @@ class PersonRepositoryIT {
     }
 
     private fun aPersistedPersonWithAddress(): Person {
+        val anAddress = Address(address = "Mustergasse 1")
+
         val aPerson = Person(name = "Toni Tester")
-        val anAddress = Address(address = "Mustergasse 1", person = aPerson)
-        aPerson.addresses.add(anAddress)
+        aPerson.addAddress(anAddress)
 
         return personRepository.saveAndFlush(aPerson)
     }
