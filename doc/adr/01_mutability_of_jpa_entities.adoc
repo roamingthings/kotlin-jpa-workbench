@@ -1,0 +1,32 @@
+## Mutability of JPA Entities in Kotlin implementations
+
+### Status
+
+accepted
+
+### Context
+
+Mutability of Objects is known to be error prone since everyone holding a reference to an instance can modify the
+state of the object. This can lead to unexpected side effects.
+
+For this reason the usage of immutable state is preferred. This is even more important when it comes to functional
+programming.
+
+Kotlin offers both _mutable_ declarations (`var`) and data structures (`MutableList`, `MutableSet` etc.)
+as well as _immutable_ declarations (`val`) and data structures (`List`, `Set` etc.)
+
+On the other hand JPA is conceptually taking mutable entities into account. Changes to the state of a managed  entities
+are merged with the persistent state.
+
+### Decision
+
+Properties and relations of JPA entities are implemented as immutable fields and collections. This allows to benefit
+from the framework.
+
+## Consequences
+
+It is important that entities should only handled inside the bounds of the persistence layer. Services that are
+accessing entities must perform a mapping between the entities and the domain model as close as possible to this
+boundary.
+
+Entities must not be returned or passed in as a parameter by any component outside the persistence layer.
