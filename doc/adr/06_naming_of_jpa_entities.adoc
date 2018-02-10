@@ -1,0 +1,21 @@
+== JPA Entities are named 'XxxEntity` and in a `.model` package
+
+=== Status
+
+accepted
+
+=== Context
+
+A naming schema for entity classes and their namespace is required for easier understanding.
+
+=== Decision
+
+All JPA Entity classes are named with `Entity` as a suffix. For example an entity modelling a person is named
+`PersonEntity`. The classes are in a `.model` package.
+
+Both decisions should emphasize the fact that they are an implementation detail and related to a certain framework
+(JPA in this case).
+
+=== Consequences
+
+The naming schema must be used.

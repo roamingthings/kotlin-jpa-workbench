@@ -1,7 +1,7 @@
 package de.roamingthings.workbench.kotlinjpaworkbench.repository
 
-import de.roamingthings.workbench.kotlinjpaworkbench.domain.Address
-import de.roamingthings.workbench.kotlinjpaworkbench.domain.Person
+import de.roamingthings.workbench.kotlinjpaworkbench.model.AddressEntity
+import de.roamingthings.workbench.kotlinjpaworkbench.model.PersonEntity
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.JUnitSoftAssertions
 import org.junit.Rule
@@ -92,20 +92,20 @@ class PersonRepositoryIT {
                 .contains(actualPerson)
     }
 
-    private fun aPersistedPersonWithAddress(): Person {
+    private fun aPersistedPersonWithAddress(): PersonEntity {
         val personToPersist = aPerson()
         personToPersist.addAddress(anAddress())
 
         return personRepository.saveAndFlush(personToPersist)
     }
 
-    private fun anAddress(): Address {
-        return Address(
+    private fun anAddress(): AddressEntity {
+        return AddressEntity(
                 streetAddress = "Mustergasse 1",
                 city = "Berlin",
                 postalCode = "12345"
         )
     }
 
-    private fun aPerson() = Person(firstName = "Toni", lastName = "Tester")
+    private fun aPerson() = PersonEntity(firstName = "Toni", lastName = "Tester")
 }
