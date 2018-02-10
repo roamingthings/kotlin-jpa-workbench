@@ -1,0 +1,22 @@
+== Properties representing JPA Relations are implemented in the class body
+
+=== Status
+
+accepted
+
+=== Context
+
+When using aKotlin `data class` all properties defined in the primary constructor are used by the generated
+`toString()`, `hashCode()` and other methods. This can lead to recursion when bi-directional relations are
+implemented.
+
+=== Decision
+
+Relations of JPA entities are generally implemented in the class body and will therefore not be used in the generated
+methods as stated above.
+
+=== Consequences
+
+If a relation should be used by the generated methods the have to be overridden by the implementation. In this case
+it has to be taken care of the fact that bi-directional relations between JPA entities could lead to recursion and
+therefore a `StackOverflowException` when not handled properly.

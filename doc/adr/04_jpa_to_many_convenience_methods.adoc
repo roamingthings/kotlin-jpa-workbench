@@ -1,0 +1,25 @@
+== For JPA To-Many relations adding and removing are handled by an entity method
+
+=== Status
+
+draft
+
+=== Context
+
+When building a bi-directional relation in JPA the entities from both sides of the relation have to get a reference
+to the other partner.
+
+To-Many relations are implemented using a (mutable) iteration (`MutableList` or `MutableSet`).
+
+=== Decision
+
+In To-Many relation convenience methods `addXXX()` and `removeXXX()` are implemented to handle the addition or removal
+of an entity to or from the relation.
+
+The owning side of the relation (parent) is also responsible for setting or removing itself to or from the dependent
+entity.
+
+=== Consequences
+
+Adding and removing of an entity to a relation must be done by using the implemented `addXXX()` and `removeXXX()`
+methods.

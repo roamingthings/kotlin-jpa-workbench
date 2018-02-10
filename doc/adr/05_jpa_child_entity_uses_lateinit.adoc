@@ -1,0 +1,21 @@
+== JPA Entities being a child in a bi-directional relation use `lateinit` properties
+
+=== Status
+
+draft
+
+=== Context
+
+Kotlin requires that a value is assigned to all properties as long as they are not declared `lateinit`.
+
+Properties representing a bi-directional relation may be initialized shortly before the parent entity is available.
+
+=== Decision
+
+Properties representing the relation to an owing/parent entity in a bi-directional relation are declared as
+`lateinit var` properties.
+
+=== Consequences
+
+If relations that are declared that way are not initialized an unexpected runtime error might occur when the property
+is accessed.

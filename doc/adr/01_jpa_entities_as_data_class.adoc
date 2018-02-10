@@ -1,0 +1,19 @@
+== In Kotlin JPA Entities are implemented using `data class`
+
+=== Status
+
+accepted
+
+=== Context
+
+Kotlin offers a special kind of class called a `data class` to implement data structures representing a part of a data
+model. These classes help to prevent boilerplate by offering automatic implementations of some conceptual patterns.
+
+=== Decision
+
+In Kotlin JPA Entities are implemented using `data class`.
+
+=== Consequences
+
+Since methods like `toString()` or `hashCode()` are generated automatically care must be taken which properties are
+defined in the primary constructor and which are implemented as properties inside the class body.
