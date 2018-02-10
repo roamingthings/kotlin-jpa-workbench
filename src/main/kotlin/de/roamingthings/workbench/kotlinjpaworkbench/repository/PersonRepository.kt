@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface PersonRepository: JpaRepository<Person, Long> {
-    fun findByName(name: String): Person
+    fun findByFirstName(first: String): Person
+    fun findByLastName(lastName: String): Person
 }
