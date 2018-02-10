@@ -3,22 +3,29 @@ package de.roamingthings.workbench.kotlinjpaworkbench.domain
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
+
 
 @Entity
 @Cacheable(false)
 data class Person(
         @Id @GeneratedValue
-        val id: Long? = null,
+        var id: Long? = null,
 
         @NotBlank
-        val name: String
+        var firstName: String,
+
+        @NotNull
+        var lastName: String,
+
+        var middleName: String? = null
 ) {
     @OneToMany(mappedBy = "person", cascade = [(CascadeType.ALL)])
-    var addresses: Set<Address> = HashSet()
+    var addresses: MutableSet<Address> = mutableSetOf()
 
     fun addAddress(address: Address) {
         address.person = this
-        addresses += address
+        addresses.add(address)
     }
 }
 
@@ -26,9 +33,19 @@ data class Person(
 @Cacheable(false)
 data class Address(
         @Id @GeneratedValue
-        val id: Long? = null,
+        var id: Long? = null,
 
-        @NotBlank val address: String
+        @NotBlank
+        var streetAddress: String,
+
+        @NotBlank
+        var city: String,
+
+        @NotBlank
+        @Size(min = 5, max = 5)
+        var postalCode: String,
+
+        var addressAddOn: String? = null
 ) {
     @NotNull
     @ManyToOne(optional = false)
