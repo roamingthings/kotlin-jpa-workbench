@@ -1,4 +1,4 @@
-package de.roamingthings.workbench.kotlinjpaworkbench.domain
+package de.roamingthings.workbench.kotlinjpaworkbench.model
 
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
@@ -7,8 +7,7 @@ import javax.validation.constraints.Size
 
 
 @Entity
-@Cacheable(false)
-data class Person(
+data class PersonEntity(
         @Id @GeneratedValue
         var id: Long? = null,
 
@@ -21,17 +20,16 @@ data class Person(
         var middleName: String? = null
 ) {
     @OneToMany(mappedBy = "person", cascade = [(CascadeType.ALL)])
-    var addresses: MutableSet<Address> = mutableSetOf()
+    var addresses: MutableSet<AddressEntity> = mutableSetOf()
 
-    fun addAddress(address: Address) {
+    fun addAddress(address: AddressEntity) {
         address.person = this
         addresses.add(address)
     }
 }
 
 @Entity
-@Cacheable(false)
-data class Address(
+data class AddressEntity(
         @Id @GeneratedValue
         var id: Long? = null,
 
@@ -49,5 +47,5 @@ data class Address(
 ) {
     @NotNull
     @ManyToOne(optional = false)
-    lateinit var person: Person
+    lateinit var person: PersonEntity
 }
